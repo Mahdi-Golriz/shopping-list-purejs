@@ -1,0 +1,91 @@
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+  font-family: "Nunito", sans-serif;
+}
+
+body > div.container {
+  width: 100%;
+  height: auto;
+  padding: 1.5rem;
+}
+body > div.container > header {
+  width: 100%;
+  height: 20rem;
+  background-color: aqua;
+}
+body > div.container > main {
+  width: 100%;
+  height: auto;
+}
+body > div.container > main > ul {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 1rem;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-evenly;
+}
+body > div.container > main > ul > li {
+  list-style: none;
+  height: 40rem;
+  flex-basis: 20%;
+  padding: 1rem;
+  display: flex;
+}
+body > div.container > main > ul > li > a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  color: #2b2b2b;
+  font-size: 1.4rem;
+}
+body > div.container > main > ul > li > a > div {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+body > div.container > main > ul > li > a > div > figure {
+  width: 100%;
+  height: 65%;
+}
+body > div.container > main > ul > li > a > div > figure > img {
+  display: block;
+  width: 100%;
+  height: 75%;
+  object-fit: contain;
+}
+body > div.container > main > ul > li > a > div > figure > figcaption {
+  height: 30%;
+  padding: 1rem;
+  font-weight: bold;
+}
+body > div.container > main > ul > li > a > div > p.rate {
+  flex-grow: 1;
+  padding: 0 1rem;
+  font-weight: 500;
+  height: 5%;
+}
+body > div.container > main > ul > li > a > div > p.price {
+  flex-grow: 1;
+  padding: 0 1rem;
+  height: 5%;
+}
+body > div.container > main > ul > li > a > div > p.description {
+  flex-grow: 1;
+  padding: 0 1rem;
+  height: auto;
+}
+
+/*# sourceMappingURL=styles.css.map */
