@@ -20,7 +20,7 @@ function _ShoppingList() {
 
     let price = document.createElement("p");
     price.setAttribute("class", "price");
-    price.innerHTML = item.price;
+    price.innerHTML = `${item.price} $`;
 
     let description = document.createElement("p");
     description.setAttribute("class", "description");
