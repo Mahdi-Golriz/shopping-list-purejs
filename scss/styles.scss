@@ -19,14 +19,45 @@ body {
 
     > header {
       width: 100%;
-      height: 20rem;
-      background-color: aqua;
+      height: 10rem;
+
+      padding: 2rem;
+      > div.form {
+        width: 100%;
+        height: auto;
+        display: flex;
+        padding: 2rem;
+        align-items: center;
+        justify-content: space-between;
+
+        button {
+          display: inline-block;
+          padding: 1.5rem;
+          border: 1px solid #e0e0e0;
+          border-radius: 1rem;
+          background-color: rgb(250, 247, 247);
+          font-family: "Nunito", sans-serif;
+          font-weight: bold;
+          color: darkmagenta;
+          cursor: pointer;
+
+          &:hover {
+            background-color: cornflowerblue;
+            color: antiquewhite;
+          }
+        }
+
+        button.active {
+          background-color: cornflowerblue;
+          color: antiquewhite;
+        }
+      }
     }
 
     > main {
       width: 100%;
       height: auto;
-      //   background-color: blueviolet;
+      position: relative;
 
       > ul {
         width: 100%;
@@ -43,6 +74,14 @@ body {
           flex-basis: 20%;
           padding: 1rem;
           display: flex;
+          border: 1px solid #e0e0e0;
+          border-radius: 8px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          transition: 300ms;
+          &:hover {
+            box-shadow: 1px 3px 6px rgba(0, 0, 0, 0.4);
+          }
+
           > a {
             display: block;
             width: 100%;
@@ -107,6 +146,47 @@ body {
           }
         }
       }
+
+      .loader--container {
+        position: absolute;
+        display: block;
+        width: 100%;
+        height: 100%;
+        background-color: #fff;
+        .loader {
+          border: 1.6rem solid #f3f3f3;
+          border-top: 1.6rem solid darkblue;
+          border-radius: 50%;
+          width: 12rem;
+          height: 12rem;
+          animation: spin 2s linear infinite;
+          position: absolute;
+          top: 30rem;
+          left: calc(50%);
+        }
+
+        @keyframes spin {
+          0% {
+            transform: rotate(0deg);
+          }
+
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+      }
     }
   }
+}
+
+p.numItems {
+  display: inline-block;
+  padding: 1.5rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 1rem;
+  background-color: rgb(250, 247, 247);
+  font-family: "Nunito", sans-serif;
+  font-weight: bold;
+  color: darkmagenta;
+  font-size: 1.5rem;
 }

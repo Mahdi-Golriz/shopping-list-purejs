@@ -1,10 +1,81 @@
-import getData from "./services.js";
+import getData, {
+  getAllCategories,
+  getSortedData,
+  getSpecificCategory,
+} from "./services.js";
 let data = await getData();
+console.log(data);
+let activeIndex = 0;
+let categories = await getAllCategories();
+let filterButtons = document.querySelectorAll("div.filter button");
+let sortButtons = document.querySelectorAll("div.sort button");
 
-console.log(data[0]);
+async function _handleFilterItems() {
+  filterButtons.forEach((button, i) => {
+    button.addEventListener("click", async () => {
+      if (button.classList.contains("active")) return;
+      activeIndex = i;
+      document.querySelector(".ascending").classList.add("active");
+      _updateIndex();
 
-function _ShoppingList() {
-  data.forEach((item) => {
+      if (i === 0) {
+        document.querySelector("main ul").innerHTML = "";
+        _shoppingList(data);
+      } else {
+        sortButtons.forEach(
+          (button) =>
+            button.classList.contains("active") &&
+            button.classList.remove("active")
+        );
+
+        button.innerHTML = categories[i - 1];
+        let filteredData = await getSpecificCategory(categories[i - 1]);
+        document.querySelector("main ul").innerHTML = "";
+        _shoppingList(filteredData);
+      }
+    });
+  });
+}
+
+function _numItems(data) {
+  let numItems = data.length;
+  document.querySelector(".numItems").innerHTML = `${numItems} Items`;
+}
+
+async function _handleSortItems() {
+  let ascendingButton = document.querySelector(".ascending");
+  let descendingButton = document.querySelector(".descending");
+
+  ascendingButton.addEventListener("click", async () => {
+    if (ascendingButton.classList.contains("active")) return;
+
+    descendingButton.classList.remove("active");
+    ascendingButton.classList.add("active");
+
+    let ascendedItems = await getSortedData("asc");
+    document.querySelector("main ul").innerHTML = "";
+    _shoppingList(ascendedItems);
+  });
+
+  descendingButton.addEventListener("click", async () => {
+    if (descendingButton.classList.contains("active")) return;
+
+    ascendingButton.classList.remove("active");
+    descendingButton.classList.add("active");
+    let descendedItems = await getSortedData("desc");
+    document.querySelector("main ul").innerHTML = "";
+    _shoppingList(descendedItems);
+  });
+}
+
+function _updateIndex() {
+  for (let i = 0; i < filterButtons.length; i++) {
+    filterButtons[i].classList.toggle("active", i === activeIndex);
+  }
+}
+
+function _shoppingList(selectedData = data) {
+  selectedData.forEach((item) => {
     let img = document.createElement("img");
     img.setAttribute("src", item.image);
 
@@ -38,6 +109,10 @@ function _ShoppingList() {
 
     document.querySelector("main ul").append(li);
   });
+
+  _numItems(selectedData);
 }
 
-_ShoppingList();
+_shoppingList();
+_handleFilterItems();
+_handleSortItems();

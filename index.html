@@ -8,8 +8,26 @@
   </head>
   <body>
     <div class="container">
-      <header class="header"></header>
+      <header class="header">
+        <div class="form">
+          <div class="filter">
+            <button class="all-products active">All Products</button>
+            <button class="category">electronics</button>
+            <button class="category">jewelery</button>
+            <button class="category">men's clothing</button>
+            <button class="category">women's clothing</button>
+          </div>
+          <p class="numItems"></p>
+          <div class="sort">
+            <button class="ascending active">Ascending</button>
+            <button class="descending">Descending</button>
+          </div>
+        </div>
+      </header>
       <main class="main">
+        <div class="loader--container">
+          <div class="loader"></div>
+        </div>
         <ul></ul>
       </main>
     </div>
