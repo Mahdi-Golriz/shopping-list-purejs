@@ -39,10 +39,6 @@ body > div.container > header > div.form button {
   color: darkmagenta;
   cursor: pointer;
 }
-body > div.container > header > div.form button:hover {
-  background-color: cornflowerblue;
-  color: antiquewhite;
-}
 body > div.container > header > div.form button.active {
   background-color: cornflowerblue;
   color: antiquewhite;

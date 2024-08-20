@@ -1,6 +1,13 @@
+// keep all products' data
 let data;
+
+// kepp products of each category
 let specificCategory;
+
+// kepp sorted products
 let sortedData;
+
+// get all products
 export default async function getData() {
   try {
     document.querySelector(".loader--container").style.display = "block";
@@ -16,8 +23,10 @@ export default async function getData() {
   return data;
 }
 
+// an object to cache the products of each cagetory after first fetching
 let cache = {};
 
+// preload the cache from local storage
 function preloadCache() {
   const preCache = localStorage.getItem("cache");
   if (!preCache) return;
@@ -27,9 +36,12 @@ function preloadCache() {
 preloadCache();
 
 export async function getSpecificCategory(category) {
+  // get the chached time to campare with current time
   const cachedTime = +localStorage.getItem("cachedTime");
+
   const checkTime = Date.now() - cachedTime < 30 * 1000;
 
+  // get the data from cache after first fetching and update the cache after 30 seconds
   if (category in cache && checkTime) return cache[category];
 
   try {

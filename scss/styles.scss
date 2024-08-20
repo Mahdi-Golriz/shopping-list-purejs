@@ -40,11 +40,6 @@ body {
           font-weight: bold;
           color: darkmagenta;
           cursor: pointer;
-
-          &:hover {
-            background-color: cornflowerblue;
-            color: antiquewhite;
-          }
         }
 
         button.active {

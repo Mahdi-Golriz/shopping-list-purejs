@@ -5,78 +5,97 @@ import getData, {
 } from "./services.js";
 const data = await getData();
 
+// using activeIndex to hanlde filter buttons' css and eventhandler
 let activeIndex = 0;
 const categories = await getAllCategories();
 const filterButtons = document.querySelectorAll("div.filter button");
 const sortButtons = document.querySelectorAll("div.sort button");
+const container = document.querySelector("main ul");
 
 async function _handleFilterItems() {
   filterButtons.forEach((button, i) => {
     button.addEventListener("click", async () => {
       if (button.classList.contains("active")) return;
+
       activeIndex = i;
-      document.querySelector(".ascending").classList.add("active");
+
+      // toggle active class based on activeIndex
       _updateIndex();
 
+      // first button is used to display all items (data)
       if (i === 0) {
-        document.querySelector("main ul").innerHTML = "";
+        // sort buttons are applicable for all items not categories
+        _enableSortButtons();
+
+        // generate list of product cards for all items
         _generateProductCards(data);
       } else {
-        sortButtons.forEach(
-          (button) =>
-            button.classList.contains("active") &&
-            button.classList.remove("active")
-        );
+        // sort buttons should be inactive for categories
+        _disableSortButtons();
 
-        button.innerHTML = categories[i - 1];
-
+        // fetch data for each specific category based
         let filteredData = await getSpecificCategory(categories[i - 1]);
-
-        document.querySelector("main ul").innerHTML = "";
-
         _generateProductCards(filteredData);
       }
     });
   });
 }
 
+// removing active class, adding disabled
+function _disableSortButtons() {
+  sortButtons.forEach((button) => {
+    button.classList?.remove("active");
+    button.setAttribute("disabled", "");
+    button.style.cursor = "not-allowed";
+  });
+}
+
+// adding active class, removing disabled
+function _enableSortButtons() {
+  sortButtons.forEach((button, i) => {
+    button.removeAttribute("disabled");
+    // Items (data) are ascending by default
+    button.classList.toggle("active", i === 0);
+    button.style.cursor = "pointer";
+  });
+}
+
+// calculate number of Items to display
 function _numItems(length) {
   document.querySelector(".numItems").innerHTML = `${length} Items`;
 }
 
 async function _handleSortItems() {
-  const ascendingButton = document.querySelector(".ascending");
-  const descendingButton = document.querySelector(".descending");
+  sortButtons.forEach((button, i) => {
+    button.addEventListener("click", async () => {
+      if (button.classList.contains("active")) return;
 
-  ascendingButton.addEventListener("click", async () => {
-    if (ascendingButton.classList.contains("active")) return;
+      if (i === 0) {
+        button.classList.add("active");
+        sortButtons[1].classList.remove("active");
+      }
 
-    descendingButton.classList.remove("active");
-    ascendingButton.classList.add("active");
+      if (i === 1) {
+        button.classList.add("active");
+        sortButtons[0].classList.remove("active");
+      }
 
-    const ascendedItems = await getSortedData("asc");
-    document.querySelector("main ul").innerHTML = "";
-    _generateProductCards(ascendedItems);
-  });
-
-  descendingButton.addEventListener("click", async () => {
-    if (descendingButton.classList.contains("active")) return;
-
-    ascendingButton.classList.remove("active");
-    descendingButton.classList.add("active");
-    const descendedItems = await getSortedData("desc");
-    document.querySelector("main ul").innerHTML = "";
-    _generateProductCards(descendedItems);
+      let sortedItems = await getSortedData(i === 0 ? "asc" : "desc");
+      _generateProductCards(sortedItems);
+    });
   });
 }
 
+// toggle active class
 function _updateIndex() {
   for (let i = 0; i < filterButtons.length; i++) {
     filterButtons[i].classList.toggle("active", i === activeIndex);
   }
 }
 
+// create the cards of products based on received data
 function _generateProductCards(selectedData = data) {
+  container.innerHTML = "";
   selectedData.forEach((item) => {
     let img = document.createElement("img");
     img.setAttribute("src", item.image);
@@ -109,7 +128,7 @@ function _generateProductCards(selectedData = data) {
     let li = document.createElement("li");
     li.append(anchor);
 
-    document.querySelector("main ul").append(li);
+    container.append(li);
   });
 
   _numItems(selectedData.length);
